@@ -8,6 +8,8 @@ const DASH_ALPHA := 0.5
 
 var dash := DashState.new()
 var _dead: bool = false
+## False until the first physics frame has run; see _physics_process.
+var _input_ready: bool = false
 
 @onready var visual: Polygon2D = $Visual
 @onready var hurtbox: Area2D = $Hurtbox
@@ -15,7 +17,11 @@ var _dead: bool = false
 
 func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	if Input.is_action_just_pressed("dash") and dash.try_dash():
+	# The Space press that restarts the game still counts as just pressed on the new
+	# ship's first physics frame, so dash input is ignored until that frame has run.
+	var dash_pressed := _input_ready and Input.is_action_just_pressed("dash")
+	_input_ready = true
+	if dash_pressed and dash.try_dash():
 		velocity = ShipMotion.dash_velocity(velocity, input_dir, Vector2.RIGHT.rotated(rotation))
 	elif not dash.is_dashing():
 		velocity = ShipMotion.step(velocity, input_dir, delta)
