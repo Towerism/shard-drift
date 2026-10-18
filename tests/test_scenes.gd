@@ -47,3 +47,17 @@ func test_collision_layers_connect_ship_rocks_and_shard(t) -> void:
 func _instance(file: String) -> Node:
 	var packed := load(SCENE_DIR + file) as PackedScene
 	return packed.instantiate() if packed != null else null
+
+
+func test_main_has_children_in_draw_order(t) -> void:
+	var main := _instance("main.tscn")
+	if main == null:
+		t.ok(false, "main instantiates")
+		return
+	var names: Array[String] = []
+	for child: Node in main.get_children():
+		names.append(child.name)
+	var expected: Array[String] = ["Background", "Stars", "Rocks", "Shard", "Player",
+		"HitBurst", "Camera2D", "SpawnTimer", "HUD"]
+	t.eq(names, expected, "children")
+	main.free()
