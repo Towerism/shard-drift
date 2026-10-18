@@ -1,3 +1,4 @@
+class_name Rock
 extends Area2D
 ## A rock drifting in a straight line. It holds no rules about the player; the
 ## player's hurtbox detects it.

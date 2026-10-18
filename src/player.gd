@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 ## The ship. Flies with ShipMotion, dashes with DashState, and detects its own hits.
 

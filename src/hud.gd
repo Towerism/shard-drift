@@ -1,3 +1,4 @@
+class_name HUD
 extends CanvasLayer
 ## Heads-up display. It only shows what main.gd tells it and emits nothing.
 

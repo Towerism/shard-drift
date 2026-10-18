@@ -1,3 +1,4 @@
+class_name Shard
 extends Area2D
 ## The pickup. Reports when the player touches it; main.gd decides where it goes next.
 
