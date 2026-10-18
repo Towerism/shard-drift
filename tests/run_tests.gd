@@ -5,6 +5,7 @@ extends SceneTree
 const TEST_DIR := "res://tests/"
 
 var failures: int = 0
+var tests_run: int = 0
 var _current: String = ""
 
 
@@ -14,6 +15,7 @@ func _initialize() -> void:
 	for file: String in files:
 		if file.begins_with("test_") and file.ends_with(".gd"):
 			_run_file(file)
+	print("tests: %d" % tests_run)
 	print("failures: %d" % failures)
 	quit(1 if failures > 0 else 0)
 
@@ -31,6 +33,7 @@ func _run_file(file: String) -> void:
 		var name: String = method["name"]
 		if name.begins_with("test_"):
 			_current = "%s::%s" % [file, name]
+			tests_run += 1
 			suite.call(name, self)
 
 

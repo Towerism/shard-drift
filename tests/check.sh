@@ -9,7 +9,7 @@ step() {
 	echo "== godot $*"
 	timeout 120 godot --headless --path . "$@" >"$log" 2>&1
 	local code=$?
-	grep -E "SCRIPT ERROR|^ERROR:|FAIL|failures:" "$log"
+	grep -E "SCRIPT ERROR|^ERROR:|FAIL|^tests:|failures:" "$log"
 	if [ "$code" -ne 0 ] || grep -qE "SCRIPT ERROR|^ERROR:" "$log"; then
 		echo "-> failed (exit $code)"
 		status=1
